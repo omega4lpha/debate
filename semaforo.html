@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semaforo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <style>
+        h1,h2{
+            font-family: "Roboto", sans-serif;
+            font-weight: 700;
+            font-style: normal;
+            }
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: green; /* Color de fondo inicial */
+            color: white;
+            font-size: 4em;
+        }
+        #pow {
+            position: absolute;
+            top: 25%;
+            left: 25%-46vw;
+            opacity: 0;
+            transition: transform 0.3s, opacity 0.3s; /* Agregar transición para la animación */
+        }
+        #pow.visible {
+            opacity: 1; /* Hacer el elemento visible */
+        }
+        #pow img {
+            height: 20vw; /* Tamaño inicial */
+        }
+        .animar {
+            transform: oppacity;
+            transform: scale(2); /* Escalar a 46vw */
+        }
+
+        .etiquetas {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="etiquetas">
+        <h1>Tiempo restante</h1>
+        <h2 id="tiempo">3:00</h2>
+    </div>
+    <div id="pow">
+        <img src="pow.webp" alt="">
+    </div>
+</body>
+
+<script>
+    let tiempo = 180; // Tiempo en segundos
+    const tiempoElemento = document.getElementById("tiempo");
+    const powElemento = document.getElementById("pow");
+
+    function actualizarTiempo() {
+        const minutos = Math.floor(tiempo / 60);
+        const segundos = tiempo % 60;
+        tiempoElemento.textContent = `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+
+        // Cambiar color dependiendo del tiempo restante
+        if (tiempo <= 90) {
+            document.body.style.backgroundColor = "yellow"; // Cambiar a amarillo a los 90 segundos
+        }
+        if (tiempo <= 30) {
+            document.body.style.backgroundColor = "red"; // Cambiar a rojo a los 30 segundos
+        }
+        if (tiempo == 0) {
+            powElemento.classList.add("visible");
+            document.body.style.backgroundColor = "white"; // Cambiar a blanco a los 0 segundos
+        }
+    }
+
+    function iniciarTemporizador() {
+        actualizarTiempo();
+        const temporizador = setInterval(() => {
+            tiempo--;
+            actualizarTiempo();
+            if (tiempo <= 0) {
+                clearInterval(temporizador);
+                const powElemento = document.getElementById("pow");
+                powElemento.classList.add("animar");
+            }
+        }, 1000);
+    }
+
+    // Agregar clase para activar la animación al inicio
+    /*
+    window.onload = function() {
+        const powElemento = document.getElementById("pow");
+        powElemento.classList.add("animar");
+    };
+*/
+    // Llamar a la función para iniciar el temporizador
+    iniciarTemporizador();
+</script>
+</html>
