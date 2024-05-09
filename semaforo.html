@@ -71,9 +71,11 @@
         // Cambiar color dependiendo del tiempo restante
         if (tiempo <= 90) {
             document.body.style.backgroundColor = "yellow"; // Cambiar a amarillo a los 90 segundos
+            document.body.style.color = "black"; // Cambiar letras a negro a los 30 segundos
         }
         if (tiempo <= 30) {
             document.body.style.backgroundColor = "red"; // Cambiar a rojo a los 30 segundos
+            document.body.style.color = "white"; // Cambiar letras a negro a los 30 segundos
         }
         if (tiempo == 0) {
             powElemento.classList.add("visible");
